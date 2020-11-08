@@ -6,12 +6,15 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 
+import moxy.MvpAppCompatActivity;
+import moxy.presenter.InjectPresenter;
 import ru.geekbrains.semenovgithubclient.mvp.presenter.Presenter;
 import ru.geekbrains.semenovgithubclient.mvp.view.MainView;
 
-public class MainActivity extends AppCompatActivity implements MainView, View.OnClickListener{
+public class MainActivity extends MvpAppCompatActivity implements MainView, View.OnClickListener{
 
-    private Presenter presenter;
+    @InjectPresenter
+    Presenter presenter;
 
     private Button buttonCounter1;
     private Button buttonCounter2;
@@ -22,8 +25,6 @@ public class MainActivity extends AppCompatActivity implements MainView, View.On
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        presenter = new Presenter(this);
-
         buttonCounter1 = findViewById(R.id.btn_counter1);
         buttonCounter2 = findViewById(R.id.btn_counter2);
         buttonCounter3 = findViewById(R.id.btn_counter3);
@@ -31,30 +32,37 @@ public class MainActivity extends AppCompatActivity implements MainView, View.On
         buttonCounter1.setOnClickListener(this);
         buttonCounter2.setOnClickListener(this);
         buttonCounter3.setOnClickListener(this);
-
-    }
-
-    @Override
-    public void setButtonText(int index, String text) {
-        switch (index) {
-            case 0:
-                buttonCounter1.setText(text);
-                break;
-
-            case 1:
-                buttonCounter2.setText(text);
-                break;
-
-            case 2:
-                buttonCounter3.setText(text);
-                break;
-
-
-        }
     }
 
     @Override
     public void onClick(View view) {
-        presenter.counterClick(view.getId());
+        switch (view.getId()) {
+            case R.id.btn_counter1:
+                presenter.counterOneClick();
+                break;
+
+            case R.id.btn_counter2:
+                presenter.counterTwoClick();
+                break;
+
+            case R.id.btn_counter3:
+                presenter.counterThreeClick();
+                break;
+        }
+    }
+
+    @Override
+    public void setButtonOneText(String text) {
+        buttonCounter1.setText(text);
+    }
+
+    @Override
+    public void setButtonTwoText(String text) {
+        buttonCounter2.setText(text);
+    }
+
+    @Override
+    public void setButtonThreeText(String text) {
+        buttonCounter3.setText(text);
     }
 }
