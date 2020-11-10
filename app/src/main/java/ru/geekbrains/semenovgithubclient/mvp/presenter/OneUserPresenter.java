@@ -14,7 +14,7 @@ import ru.geekbrains.semenovgithubclient.mvp.view.UserItemView;
 import ru.geekbrains.semenovgithubclient.mvp.view.UsersView;
 import ru.terrakok.cicerone.Router;
 
-public class UsersPresenter extends MvpPresenter<UsersView>  {
+public class OneUserPresenter extends MvpPresenter<UsersView> {
     private static final String TAG = UsersPresenter.class.getSimpleName();
 
     private static final boolean VERBOSE = true;
@@ -29,7 +29,6 @@ public class UsersPresenter extends MvpPresenter<UsersView>  {
         @Override
         public void onItemClick(UserItemView view) {
             if (VERBOSE) {
-                // отсюда надо как-то перейти в другой фрагмент
                 Log.v(TAG, " onItemClick " + view.getPos());
             }
         }
@@ -46,11 +45,6 @@ public class UsersPresenter extends MvpPresenter<UsersView>  {
         }
     }
 
-    private UsersListPresenter usersListPresenter = new UsersListPresenter();
-
-    public UsersListPresenter getUsersListPresenter() {
-        return usersListPresenter;
-    }
 
     @Override
     protected void onFirstViewAttach() {
@@ -63,7 +57,6 @@ public class UsersPresenter extends MvpPresenter<UsersView>  {
 
     private void loadData() {
         List<GithubUser> users = usersRepo.getUsers();
-        usersListPresenter.users.addAll(users);
         getViewState().updateList();
     }
 
