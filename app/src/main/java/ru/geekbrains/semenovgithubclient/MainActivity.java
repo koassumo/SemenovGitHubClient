@@ -33,7 +33,7 @@ public class MainActivity extends MvpAppCompatActivity implements MainView {
     protected void onResumeFragments() {
         super.onResumeFragments();
         navigatorHolder.setNavigator(navigator);
-    }
+}
 
     @Override
     protected void onPause() {
